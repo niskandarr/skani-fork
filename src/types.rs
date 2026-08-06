@@ -110,7 +110,7 @@ pub fn mm_hash_bytes_32(bytes: &[u8]) -> usize {
 
 #[inline]
 pub fn mm_hash(bytes: &[u8]) -> usize {
-    let mut key = usize::from_ne_bytes(bytes.try_into().unwrap());
+    let mut key = u64::from_ne_bytes(bytes.try_into().unwrap()) as usize;
     key = !key.wrapping_add(key << 21); // key = (key << 21) - key - 1;
     key = key ^ key >> 24;
     key = (key.wrapping_add(key << 3)).wrapping_add(key << 8); // key * 265

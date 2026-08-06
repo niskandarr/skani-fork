@@ -42,11 +42,14 @@ pub fn parse_params(matches: &ArgMatches) -> (SketchParams, CommandParams) {
         .build_global()
         .unwrap();
 
+#[cfg(not(target_arch = "wasm32"))]
     simple_logging::log_to_stderr(LevelFilter::Info);
     if matches_subc.is_present("v") {
+#[cfg(not(target_arch = "wasm32"))]
         simple_logging::log_to_stderr(LevelFilter::Debug);
     }
     if matches_subc.is_present("trace") {
+#[cfg(not(target_arch = "wasm32"))]
         simple_logging::log_to_stderr(LevelFilter::Trace);
     }
 
@@ -515,11 +518,14 @@ fn setup_logging_and_threads(threads: &str, debug: bool, trace: bool) {
         .build_global()
         .unwrap();
 
+#[cfg(not(target_arch = "wasm32"))]
     simple_logging::log_to_stderr(LevelFilter::Info);
     if debug {
+#[cfg(not(target_arch = "wasm32"))]
         simple_logging::log_to_stderr(LevelFilter::Debug);
     }
     if trace {
+#[cfg(not(target_arch = "wasm32"))]
         simple_logging::log_to_stderr(LevelFilter::Trace);
     }
 }
@@ -662,7 +668,7 @@ fn parse_dist_args(args: &DistArgs) -> (SketchParams, CommandParams) {
 
     let max_results = args.n.as_ref()
         .map(|s| s.parse::<usize>().unwrap())
-        .unwrap_or(1000000000000);
+        .unwrap_or(usize::MAX);
 
     let def_k = if amino_acid { DEFAULT_K_AAI } else { DEFAULT_K };
     let def_c = if amino_acid { DEFAULT_C_AAI } else { DEFAULT_C };

@@ -23,11 +23,11 @@ thiserror = "1.0"
 bio = "1"
 rand = "0.8.3"
 fxhash = "0"
-partitions = { git = "https://github.com/bluenote-1577/partitions.git" }
+partitions = { git = "https://github.com/nadiaaiskandar/partitions.git" }
 #partitions = "0.2"
 num-traits = "0"
-needletail = "0.5"
-simple-logging= "2"
+needletail = { version = "0.5", default-features = false }
+
 log = "0.4"
 rayon = "1.5"
 smallvec = { version = "1", features = ["union","serde","write"] }
