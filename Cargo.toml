@@ -23,11 +23,9 @@ thiserror = "1.0"
 bio = "1"
 rand = "0.8.3"
 fxhash = "0"
-partitions = { git = "https://github.com/bluenote-1577/partitions.git" }
+partitions = { git = "https://github.com/bluenote-1577/partitions.git", default-features = false }
 #partitions = "0.2"
 num-traits = "0"
-needletail = "0.5"
-simple-logging= "2"
 log = "0.4"
 rayon = "1.5"
 smallvec = { version = "1", features = ["union","serde","write"] }
@@ -77,3 +75,15 @@ opt-level = 3
 
 #[rust]
 #debuginfo-level = 1
+
+# WASM compatibility: needletail's default features pull in bzip2/lzma (C
+# libraries that don't compile for wasm32). Scoped per platform so native
+# builds keep full compressed-file support.
+# simple-logging depends on thread-id (OS threads, unavailable on wasm32);
+# only the CLI-only parse.rs uses it.
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+needletail = "0.5"
+simple-logging = "2"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+needletail = { version = "0.5", default-features = false }

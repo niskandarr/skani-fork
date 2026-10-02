@@ -4,7 +4,9 @@ pub mod chain;
 pub mod file_io;
 pub mod seeding;
 pub mod screen;
+#[cfg(feature = "cli")]
 pub mod search;
+#[cfg(feature = "cli")]
 pub mod sketch;
 pub mod dist;
 pub mod triangle;

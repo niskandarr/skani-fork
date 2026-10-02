@@ -110,7 +110,7 @@ pub fn mm_hash_bytes_32(bytes: &[u8]) -> usize {
 
 #[inline]
 pub fn mm_hash(bytes: &[u8]) -> usize {
-    let mut key = usize::from_ne_bytes(bytes.try_into().unwrap());
+    let mut key = u64::from_ne_bytes(bytes.try_into().unwrap()); // CHANGED FROM usize to u64
     key = !key.wrapping_add(key << 21); // key = (key << 21) - key - 1;
     key = key ^ key >> 24;
     key = (key.wrapping_add(key << 3)).wrapping_add(key << 8); // key * 265
@@ -118,7 +118,7 @@ pub fn mm_hash(bytes: &[u8]) -> usize {
     key = (key.wrapping_add(key << 2)).wrapping_add(key << 4); // key * 21
     key = key ^ key >> 28;
     key = key.wrapping_add(key << 31);
-    key
+    key as usize // CHANGED from key to key as usize 
 }
 
 #[derive(Eq, PartialEq, Ord, PartialOrd, Default, Clone, Serialize, Deserialize, Debug)]
